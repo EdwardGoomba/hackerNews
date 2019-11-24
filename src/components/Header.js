@@ -27,7 +27,7 @@ const Header = ({ history }) => {
             className="ml1 pointer black"
             onClick={() => {
               localStorage.removeItem(AUTH_TOKEN)
-              history.pushState(`/`)
+              history.push(`/`)
             }}
           >
             logout
