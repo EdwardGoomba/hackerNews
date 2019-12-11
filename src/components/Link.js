@@ -24,14 +24,20 @@ const VOTE_MUTATION = gql`
   }
 `
 
-const Link = ({ index, link }) => {
+const Link = ({ index, link, updateStoreAfterVote }) => {
   const authToken = localStorage.getItem(AUTH_TOKEN)
   return (
     <div className="flex mt2 items-start">
       <div className="flex items-center">
         <span className="gray">{index + 1}.</span>
         {authToken && (
-          <Mutation mutation={VOTE_MUTATION} variables={{ linkId: link.id }}>
+          <Mutation
+            mutation={VOTE_MUTATION}
+            variables={{ linkId: link.id }}
+            update={(store, { data: { vote } }) =>
+              updateStoreAfterVote(store, vote, link.id)
+            }
+          >
             {voteMutation => (
               <div className="ml1 gray f11" onClick={voteMutation}>
                 ▲
